@@ -1,1 +1,496 @@
 
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#10131b">
+<title>شهادات الطلاب</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root { --gold:#d9b66b; }
+* { box-sizing:border-box; }
+
+body {
+  margin:0;
+  min-height:100vh;
+  padding:28px 16px 48px;
+  font-family:"Cairo",sans-serif;
+  color:#202534;
+  background:radial-gradient(circle at 15% 0%,#28344b 0,#151b29 38%,#0d111a 100%);
+}
+
+.page { width:min(100%,980px); margin:auto; }
+.top { text-align:center; color:#fff; margin:0 auto 24px; }
+.top h1 { margin:0 0 8px; font-size:clamp(25px,4vw,38px); font-weight:900; }
+.top p { margin:0; color:#c6ccda; font-size:14px; }
+
+.panel {
+  background:#fff;
+  border-radius:20px;
+  padding:22px;
+  box-shadow:0 18px 55px #0005;
+  margin-bottom:22px;
+}
+
+.form {
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:12px;
+  align-items:end;
+}
+
+label { display:block; font-weight:800; margin-bottom:7px; }
+
+input {
+  width:100%;
+  border:1px solid #d8dce5;
+  border-radius:12px;
+  padding:14px 15px;
+  font:600 16px "Cairo",sans-serif;
+  outline:none;
+}
+
+input:focus {
+  border-color:#b58b3d;
+  box-shadow:0 0 0 3px #d9b66b33;
+}
+
+button {
+  border:0;
+  border-radius:12px;
+  padding:13px 22px;
+  cursor:pointer;
+  font:800 15px "Cairo",sans-serif;
+}
+
+button:disabled { opacity:.55; cursor:wait; }
+.primary { background:#172033; color:#fff; min-width:145px; }
+.download { background:#d9b66b; color:#171717; }
+
+.status {
+  min-height:26px;
+  margin:12px 2px 0;
+  font-size:14px;
+  font-weight:700;
+}
+.status.error { color:#b42318; }
+.status.success { color:#167447; }
+
+.result { display:none; }
+.result.show { display:block; }
+
+.result-head {
+  display:flex;
+  gap:12px;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  margin-bottom:14px;
+}
+
+.result-head h2 { margin:0; font-size:19px; }
+
+.certificate-scroll {
+  width:100%;
+  overflow-x:auto;
+  padding:2px 2px 12px;
+}
+
+.certificate {
+  width:1122px;
+  height:794px;
+  position:relative;
+  overflow:hidden;
+  margin:0 auto;
+  padding:42px;
+  text-align:center;
+  isolation:isolate;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  background:#10131b;
+  color:#f8f4e9;
+  border:14px solid #d2ad61;
+  box-shadow:inset 0 0 0 5px #10131b,inset 0 0 0 7px #d2ad61;
+  font-family:"Amiri",serif;
+}
+
+.certificate::before,.certificate::after {
+  content:"";
+  position:absolute;
+  inset:22px;
+  border:1px solid #d9b66b99;
+  pointer-events:none;
+  z-index:-1;
+}
+
+.certificate::after {
+  inset:34px;
+  border-style:dashed;
+  opacity:.45;
+}
+
+.ornament {
+  color:#d9b66b;
+  font-size:30px;
+  letter-spacing:12px;
+  margin-bottom:12px;
+}
+
+.cert-kicker {
+  font:700 24px "Cairo",sans-serif;
+  color:#e4c77f;
+  margin:0 0 12px;
+}
+
+.cert-title {
+  font-size:58px;
+  line-height:1.35;
+  color:#f3d58b;
+  margin:0 0 8px;
+  font-weight:700;
+}
+
+.cert-subtitle {
+  font:600 24px "Cairo",sans-serif;
+  color:#fff;
+  margin:0 0 24px;
+}
+
+.cert-intro {
+  font-size:27px;
+  margin:0 0 8px;
+}
+
+.student-name {
+  min-width:560px;
+  max-width:900px;
+  padding:0 24px 10px;
+  margin:5px 0 18px;
+  color:#f1d18a;
+  border-bottom:2px solid #d9b66b;
+  font-size:46px;
+  font-weight:700;
+}
+
+.cert-copy {
+  max-width:850px;
+  font-size:25px;
+  line-height:1.8;
+  margin:0 auto;
+}
+
+.cert-footer {
+  width:78%;
+  display:flex;
+  align-items:end;
+  justify-content:space-between;
+  margin-top:28px;
+  font:700 19px "Cairo",sans-serif;
+  color:#e8d9b8;
+}
+
+.signature { font-size:22px; color:#f3d58b; }
+.score-line {
+  margin-top:10px;
+  font:700 18px "Cairo",sans-serif;
+  color:#e8d9b8;
+}
+
+.funny {
+  background:#fff8e8;
+  color:#2e2630;
+  border-color:#a65d48;
+  box-shadow:inset 0 0 0 5px #fff8e8,inset 0 0 0 7px #a65d48;
+}
+
+.funny::before { border-color:#a65d48aa; }
+.funny::after { border-color:#a65d48; }
+.funny .ornament { color:#a65d48; }
+.funny .cert-kicker { color:#a65d48; }
+.funny .cert-title { color:#7d3540; }
+.funny .cert-subtitle { color:#493b42; }
+.funny .student-name { color:#7d3540; border-color:#a65d48; }
+.funny .cert-copy,.funny .cert-intro { color:#493b42; }
+.funny .cert-footer,.funny .signature,.funny .score-line { color:#7d3540; }
+
+.note {
+  color:#d0d5df;
+  text-align:center;
+  font-size:12px;
+  margin-top:18px;
+}
+
+@media(max-width:650px) {
+  body { padding:20px 10px 34px; }
+  .panel { padding:16px; }
+  .form { grid-template-columns:1fr; }
+  .primary { width:100%; }
+  .certificate { margin:0; }
+}
+</style>
+</head>
+
+<body>
+<main class="page">
+
+<header class="top">
+  <h1>بوابة شهادات التقدير</h1>
+  <p>اكتبي اسم الطالب كما هو مسجل للحصول على الشهادة المناسبة</p>
+</header>
+
+<section class="panel">
+  <form id="lookupForm" class="form">
+    <div>
+      <label for="studentName">اسم الطالب</label>
+      <input id="studentName" name="studentName" type="text"
+        autocomplete="off"
+        placeholder="اكتبي اسم الطالب ثلاثيًا"
+        required maxlength="150">
+    </div>
+    <button class="primary" id="searchButton" type="submit">
+      ابحث عن الشهادة
+    </button>
+  </form>
+  <div id="status" class="status" role="status" aria-live="polite"></div>
+</section>
+
+<section id="result" class="panel result">
+  <div class="result-head">
+    <h2 id="resultTitle">شهادتك جاهزة</h2>
+    <button id="downloadButton" class="download" type="button">
+      تحميل الشهادة PDF
+    </button>
+  </div>
+
+  <div class="certificate-scroll">
+    <article id="certificate" class="certificate">
+      <div class="ornament">✦ ❖ ✦ ❖ ✦</div>
+      <p class="cert-kicker" id="certKicker">شهادة استحقاق وتميّز</p>
+      <h2 class="cert-title" id="certTitle">شهادة تقدير</h2>
+      <p class="cert-subtitle">امتحان شهر أكتوبر · مادة الحاسب الآلي</p>
+      <p class="cert-intro" id="certIntro">تُمنح هذه الشهادة إلى الطالب/الطالبة</p>
+      <div class="student-name" id="certificateName">اسم الطالب</div>
+      <p class="cert-copy" id="certCopy">
+        تقديرًا لاجتهاده وتميّزه، وحرصه على النجاح والتفوق.
+      </p>
+      <div class="score-line" id="scoreLine">الدرجة: —</div>
+      <footer class="cert-footer">
+        <div>التاريخ: <span id="certificateDate"></span></div>
+        <div class="signature">التوقيع<br>م/ أسماء مجدي</div>
+      </footer>
+      <div class="ornament" style="margin:22px 0 0">✦ ❖ ✦</div>
+    </article>
+  </div>
+</section>
+
+<p class="note">
+  لا يتم عرض قائمة الطلاب أو درجاتهم على الموقع؛ يتم البحث عن الاسم فقط.
+</p>
+
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+const SUPABASE_URL = "https://eglyxklsfomsrhfglxxr.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_wbIU8199VOEor6UeRFELfA_NzjPei5y";
+const FUNCTION_NAME = "lookup-student";
+
+const form = document.getElementById("lookupForm");
+const nameInput = document.getElementById("studentName");
+const searchButton = document.getElementById("searchButton");
+const downloadButton = document.getElementById("downloadButton");
+const statusBox = document.getElementById("status");
+const resultBox = document.getElementById("result");
+const certificate = document.getElementById("certificate");
+
+function setStatus(message,type="") {
+  statusBox.textContent = message;
+  statusBox.className = "status " + type;
+}
+
+function formatDate() {
+  return new Intl.DateTimeFormat("ar-EG", {
+    year:"numeric",
+    month:"long",
+    day:"numeric"
+  }).format(new Date());
+}
+
+function showCertificate(student) {
+  const score = Number(student.score);
+
+  if (!Number.isFinite(score) || typeof student.name !== "string") {
+    throw new Error("بيانات الطالب غير صالحة");
+  }
+
+  const isBlack = score >= 30;
+
+  certificate.classList.toggle("funny",!isBlack);
+
+  document.getElementById("certKicker").textContent =
+    isBlack ? "شهادة استحقاق وتميّز" : "شهادة الصمود والمحاولة";
+
+  document.getElementById("certTitle").textContent =
+    isBlack ? "شهادة تقدير وتفوّق" : "شهادة مشاركة بروح رياضية";
+
+  document.getElementById("certIntro").textContent =
+    isBlack
+    ? "تُمنح هذه الشهادة إلى الطالب/الطالبة"
+    : "تُمنح هذه الشهادة إلى صاحب/ة المحاولة";
+
+  document.getElementById("certCopy").textContent = isBlack
+    ? "تقديرًا لاجتهاده وتميّزه في امتحان شهر أكتوبر لمادة الحاسب الآلي. نفخر بما بذله من جهد وحرص على النجاح والتفوق، ونتمنى له دوام التميّز والإبداع ومزيدًا من الإنجازات والنجاحات."
+    : "لخوضه امتحان الحاسب الآلي بشجاعة وثبات، ومواجهته الأسئلة حتى آخر لحظة. قد تكون الدرجة أقل من المطلوب، لكن روح المحاولة تستحق التحية! المرة القادمة ننتظر مفاجأة أكبر.";
+
+  document.getElementById("certificateName").textContent = student.name;
+  document.getElementById("scoreLine").textContent = "الدرجة: " + score;
+  document.getElementById("certificateDate").textContent = formatDate();
+
+  document.getElementById("resultTitle").textContent =
+    isBlack ? "مبروك! شهادة التقدير جاهزة" : "شهادة المحاولة جاهزة";
+
+  resultBox.classList.add("show");
+  resultBox.scrollIntoView({behavior:"smooth",block:"start"});
+}
+
+form.addEventListener("submit",async(event)=>{
+  event.preventDefault();
+
+  const name = nameInput.value.trim();
+
+  if(!name) {
+    setStatus("اكتبي اسم الطالب أولًا.","error");
+    return;
+  }
+
+  searchButton.disabled = true;
+  searchButton.textContent = "جاري البحث...";
+  resultBox.classList.remove("show");
+  setStatus("جاري التحقق من بيانات الطالب...");
+
+  try {
+    const response = await fetch(
+      `${SUPABASE_URL}/functions/v1/${FUNCTION_NAME}`,
+      {
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json",
+          "apikey":SUPABASE_PUBLISHABLE_KEY,
+          "Authorization":`Bearer ${SUPABASE_PUBLISHABLE_KEY}`
+        },
+        body:JSON.stringify({name})
+      }
+    );
+
+    const payload = await response.json().catch(()=>({}));
+
+    if(!response.ok) {
+      throw new Error(payload.message || payload.error || "تعذر الاتصال بالخدمة");
+    }
+
+    if(!payload.found || !payload.student) {
+      setStatus(payload.message || "لم يتم العثور على الطالب. راجعي كتابة الاسم.","error");
+      return;
+    }
+
+    showCertificate(payload.student);
+    setStatus("تم العثور على الطالب وتجهيز الشهادة بنجاح.","success");
+
+  } catch(error) {
+    console.error(error);
+    setStatus("حصلت مشكلة في الاتصال. تأكدي من إعدادات وظيفة lookup-student.","error");
+  } finally {
+    searchButton.disabled = false;
+    searchButton.textContent = "ابحث عن الشهادة";
+  }
+});
+
+downloadButton.addEventListener("click",async()=>{
+  if(!window.html2canvas || !window.jspdf) {
+    setStatus("تعذر تحميل مكتبة PDF. حدّثي الصفحة وحاولي مرة أخرى.","error");
+    return;
+  }
+
+  downloadButton.disabled = true;
+  downloadButton.textContent = "جاري تجهيز PDF...";
+
+  try {
+    if(document.fonts && document.fonts.ready) {
+      await document.fonts.ready;
+    }
+
+    await new Promise(resolve=>setTimeout(resolve,300));
+
+    const canvas = await html2canvas(certificate,{
+      scale:2,
+      backgroundColor:null,
+      useCORS:true,
+      logging:false,
+      width:certificate.scrollWidth,
+      height:certificate.scrollHeight,
+      windowWidth:Math.max(
+        document.documentElement.clientWidth,
+        certificate.scrollWidth
+      )
+    });
+
+    const image = canvas.toDataURL("image/jpeg",0.96);
+    const {jsPDF} = window.jspdf;
+
+    const pdf = new jsPDF({
+      orientation:"landscape",
+      unit:"mm",
+      format:"a4",
+      compress:true
+    });
+
+    const pageWidth = pdf.internal.pageSize.getWidth();
+    const pageHeight = pdf.internal.pageSize.getHeight();
+
+    const ratio = Math.min(
+      pageWidth/canvas.width,
+      pageHeight/canvas.height
+    );
+
+    const width = canvas.width*ratio;
+    const height = canvas.height*ratio;
+
+    pdf.addImage(
+      image,"JPEG",
+      (pageWidth-width)/2,
+      (pageHeight-height)/2,
+      width,height,
+      undefined,"FAST"
+    );
+
+    const safeName = document.getElementById("certificateName")
+      .textContent
+      .replace(/[\\/:*?"<>|]/g,"_")
+      .trim()
+      .replace(/\s+/g,"_");
+
+    pdf.save(`شهادة_${safeName || "الطالب"}.pdf`);
+
+    setStatus("تم تجهيز ملف الشهادة للتحميل.","success");
+
+  } catch(error) {
+    console.error(error);
+    setStatus("لم نتمكن من إنشاء PDF. حدّثي الصفحة وحاولي مرة أخرى.","error");
+  } finally {
+    downloadButton.disabled = false;
+    downloadButton.textContent = "تحميل الشهادة PDF";
+  }
+});
+</script>
+</body>
+</html>
+
