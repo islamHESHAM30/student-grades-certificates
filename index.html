@@ -1,322 +1,348 @@
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#10131b">
-<title>شهادات الطلاب</title>
+<title>بوابة شهادات التقدير</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
-:root { --gold:#d9b66b; }
-* { box-sizing:border-box; }
+* { box-sizing: border-box; }
 
 html, body {
-  width:100%;
-  max-width:100%;
-  overflow-x:hidden;
+  margin: 0;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 body {
-  margin:0;
-  min-height:100vh;
-  padding:28px 16px 48px;
-  font-family:"Cairo",sans-serif;
-  color:#202534;
-  background:radial-gradient(circle at 15% 0%,#28344b 0,#151b29 38%,#0d111a 100%);
+  min-height: 100vh;
+  padding: 28px 16px 48px;
+  font-family: "Cairo", sans-serif;
+  color: #202534;
+  background: radial-gradient(circle at 15% 0%,#28344b 0,#151b29 38%,#0d111a 100%);
 }
 
 .page {
-  width:min(100%,980px);
-  margin:auto;
+  width: min(100%,980px);
+  margin: auto;
 }
 
 .top {
-  text-align:center;
-  color:#fff;
-  margin:0 auto 24px;
+  text-align: center;
+  color: #fff;
+  margin: 0 auto 24px;
 }
 
 .top h1 {
-  margin:0 0 8px;
-  font-size:clamp(25px,4vw,38px);
-  font-weight:900;
+  margin: 0 0 8px;
+  font-size: clamp(25px,4vw,38px);
+  font-weight: 900;
 }
 
 .top p {
-  margin:0;
-  color:#c6ccda;
-  font-size:14px;
+  margin: 0;
+  color: #c6ccda;
+  font-size: 14px;
 }
 
 .panel {
-  background:#fff;
-  border-radius:20px;
-  padding:22px;
-  box-shadow:0 18px 55px #0005;
-  margin-bottom:22px;
-  min-width:0;
+  background: #fff;
+  border-radius: 20px;
+  padding: 22px;
+  box-shadow: 0 18px 55px #0005;
+  margin-bottom: 22px;
+  min-width: 0;
 }
 
 .form {
-  display:grid;
-  grid-template-columns:1fr auto;
-  gap:12px;
-  align-items:end;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: end;
 }
 
 label {
-  display:block;
-  font-weight:800;
-  margin-bottom:7px;
+  display: block;
+  font-weight: 800;
+  margin-bottom: 7px;
 }
 
 input {
-  width:100%;
-  border:1px solid #d8dce5;
-  border-radius:12px;
-  padding:14px 15px;
-  font:600 16px "Cairo",sans-serif;
-  outline:none;
+  width: 100%;
+  border: 1px solid #d8dce5;
+  border-radius: 12px;
+  padding: 14px 15px;
+  font: 600 16px "Cairo",sans-serif;
+  outline: none;
 }
 
 input:focus {
-  border-color:#b58b3d;
-  box-shadow:0 0 0 3px #d9b66b33;
+  border-color: #b58b3d;
+  box-shadow: 0 0 0 3px #d9b66b33;
 }
 
 button {
-  border:0;
-  border-radius:12px;
-  padding:13px 22px;
-  cursor:pointer;
-  font:800 15px "Cairo",sans-serif;
+  border: 0;
+  border-radius: 12px;
+  padding: 13px 22px;
+  cursor: pointer;
+  font: 800 15px "Cairo",sans-serif;
 }
 
 button:disabled {
-  opacity:.55;
-  cursor:wait;
+  opacity: .55;
+  cursor: wait;
 }
 
 .primary {
-  background:#172033;
-  color:#fff;
-  min-width:145px;
+  background: #172033;
+  color: #fff;
+  min-width: 145px;
 }
 
 .download {
-  background:#d9b66b;
-  color:#171717;
+  background: #d9b66b;
+  color: #171717;
 }
 
 .status {
-  min-height:26px;
-  margin:12px 2px 0;
-  font-size:14px;
-  font-weight:700;
+  min-height: 26px;
+  margin: 12px 2px 0;
+  font-size: 14px;
+  font-weight: 700;
 }
 
-.status.error { color:#b42318; }
-.status.success { color:#167447; }
+.status.error { color: #b42318; }
+.status.success { color: #167447; }
 
-.result { display:none; }
-.result.show { display:block; }
+.result { display: none; }
+.result.show { display: block; }
 
 .result-head {
-  display:flex;
-  gap:12px;
-  align-items:center;
-  justify-content:space-between;
-  flex-wrap:wrap;
-  margin-bottom:14px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
 }
 
 .result-head h2 {
-  margin:0;
-  font-size:19px;
+  margin: 0;
+  font-size: 19px;
 }
 
-/* مساحة عرض الشهادة */
 .certificate-scroll {
-  width:100%;
-  max-width:100%;
-  overflow:visible;
-  padding:2px;
+  width: 100%;
+  max-width: 100%;
+  overflow: visible;
+  padding: 2px;
 }
 
-/* الشهادة المتجاوبة */
+/* الشهادة السوداء والذهبية */
 .certificate {
-  container-type:inline-size;
-  width:100%;
-  max-width:1122px;
-  aspect-ratio:1122 / 794;
-  height:auto;
-  position:relative;
-  overflow:hidden;
-  margin:0 auto;
-  padding:3.7%;
-  text-align:center;
-  isolation:isolate;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  background:#10131b;
-  color:#f8f4e9;
-  border:clamp(5px,1.25vw,14px) solid #d2ad61;
-  box-shadow:inset 0 0 0 5px #10131b,
-             inset 0 0 0 7px #d2ad61;
-  font-family:"Amiri",serif;
+  container-type: inline-size;
+  width: 100%;
+  max-width: 1122px;
+  aspect-ratio: 1122 / 794;
+  height: auto;
+  position: relative;
+  overflow: hidden;
+  margin: 0 auto;
+  padding: 3.7%;
+  text-align: center;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #10131b;
+  color: #f8f4e9;
+  border: clamp(5px,1.25vw,14px) solid #d2ad61;
+  box-shadow: inset 0 0 0 5px #10131b,
+              inset 0 0 0 7px #d2ad61;
+  font-family: "Amiri",serif;
 }
 
 .certificate::before,
 .certificate::after {
-  content:"";
-  position:absolute;
-  inset:2%;
-  border:1px solid #d9b66b99;
-  pointer-events:none;
-  z-index:-1;
+  content: "";
+  position: absolute;
+  inset: 2%;
+  border: 1px solid #d9b66b99;
+  pointer-events: none;
+  z-index: -1;
 }
 
 .certificate::after {
-  inset:3%;
-  border-style:dashed;
-  opacity:.45;
+  inset: 3%;
+  border-style: dashed;
+  opacity: .45;
 }
 
 .ornament {
-  color:#d9b66b;
-  font-size:2.7cqw;
-  letter-spacing:1cqw;
-  margin-bottom:1cqw;
-  flex-shrink:0;
+  color: #d9b66b;
+  font-size: 2.7cqw;
+  letter-spacing: 1cqw;
+  margin-bottom: 1cqw;
+  flex-shrink: 0;
 }
 
 .cert-kicker {
-  font:700 2.14cqw "Cairo",sans-serif;
-  color:#e4c77f;
-  margin:0 0 1cqw;
+  font: 700 2.14cqw "Cairo",sans-serif;
+  color: #e4c77f;
+  margin: 0 0 1cqw;
 }
 
 .cert-title {
-  font-size:5.17cqw;
-  line-height:1.35;
-  color:#f3d58b;
-  margin:0 0 .7cqw;
-  font-weight:700;
+  font-size: 5.17cqw;
+  line-height: 1.35;
+  color: #f3d58b;
+  margin: 0 0 .7cqw;
+  font-weight: 700;
 }
 
 .cert-subtitle {
-  font:600 2.14cqw "Cairo",sans-serif;
-  color:#fff;
-  margin:0 0 2cqw;
+  font: 600 2.14cqw "Cairo",sans-serif;
+  color: #fff;
+  margin: 0 0 2cqw;
 }
 
 .cert-intro {
-  font-size:2.4cqw;
-  margin:0 0 .7cqw;
+  font-size: 2.4cqw;
+  margin: 0 0 .7cqw;
 }
 
 .student-name {
-  width:80%;
-  min-width:0;
-  max-width:900px;
-  padding:0 2cqw 1cqw;
-  margin:.5cqw 0 1.5cqw;
-  color:#f1d18a;
-  border-bottom:2px solid #d9b66b;
-  font-size:4.1cqw;
-  font-weight:700;
-  overflow-wrap:anywhere;
+  width: 80%;
+  min-width: 0;
+  max-width: 900px;
+  padding: 0 2cqw 1cqw;
+  margin: .5cqw 0 1.5cqw;
+  color: #f1d18a;
+  border-bottom: 2px solid #d9b66b;
+  font-size: 4.1cqw;
+  font-weight: 700;
+  overflow-wrap: anywhere;
 }
 
 .cert-copy {
-  max-width:85%;
-  font-size:2.23cqw;
-  line-height:1.8;
-  margin:0 auto;
+  max-width: 85%;
+  font-size: 2.23cqw;
+  line-height: 1.8;
+  margin: 0 auto;
 }
 
 .cert-footer {
-  width:78%;
-  display:flex;
-  align-items:end;
-  justify-content:space-between;
-  gap:10px;
-  margin-top:2.5cqw;
-  font:700 1.7cqw "Cairo",sans-serif;
-  color:#e8d9b8;
+  width: 78%;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 2.5cqw;
+  font: 700 1.7cqw "Cairo",sans-serif;
+  color: #e8d9b8;
 }
 
 .signature {
-  font-size:1.95cqw;
-  color:#f3d58b;
+  font-size: 1.95cqw;
+  color: #f3d58b;
 }
 
 .score-line {
-  margin-top:.8cqw;
-  font:700 1.6cqw "Cairo",sans-serif;
-  color:#e8d9b8;
+  margin-top: .8cqw;
+  font: 700 1.6cqw "Cairo",sans-serif;
+  color: #e8d9b8;
 }
 
-.certificate > .ornament:last-child {
-  margin:2cqw 0 0 !important;
+/* الشهادة الكرتونية لأقل من 30 */
+.certificate.funny {
+  aspect-ratio: 1440 / 1024;
+  border: 0;
+  padding: 0;
+  background: #fff8e8 url("low-score-certificate.png") center / 100% 100% no-repeat;
+  box-shadow: none;
+  color: #17264b;
 }
 
-/* الشهادة الثانية */
-.funny {
-  background:#fff8e8;
-  color:#2e2630;
-  border-color:#a65d48;
-  box-shadow:inset 0 0 0 5px #fff8e8,
-             inset 0 0 0 7px #a65d48;
+.certificate.funny::before,
+.certificate.funny::after {
+  display: none;
 }
 
-.funny::before { border-color:#a65d48aa; }
-.funny::after { border-color:#a65d48; }
-.funny .ornament { color:#a65d48; }
-.funny .cert-kicker { color:#a65d48; }
-.funny .cert-title { color:#7d3540; }
-.funny .cert-subtitle { color:#493b42; }
-.funny .student-name {
-  color:#7d3540;
-  border-color:#a65d48;
+.funny > .ornament,
+.funny > .cert-kicker,
+.funny > .cert-title,
+.funny > .cert-subtitle,
+.funny > .cert-intro,
+.funny > .student-name,
+.funny > .cert-copy,
+.funny > .score-line,
+.funny > .cert-footer {
+  display: none !important;
 }
-.funny .cert-copy,
-.funny .cert-intro { color:#493b42; }
-.funny .cert-footer,
-.funny .signature,
-.funny .score-line { color:#7d3540; }
+
+/* الاسم والدرجة فوق خلفية الشهادة الكرتونية */
+.cartoon-name,
+.cartoon-score {
+  display: none;
+  position: absolute;
+  left: 55%;
+  width: 43%;
+  transform: translateX(-50%);
+  text-align: center;
+  font-family: "Cairo",sans-serif;
+  font-weight: 900;
+  color: #142b58;
+  background: #fff3c9;
+  border: 2px solid #d99b19;
+  border-radius: 18px;
+  padding: 4px 10px;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+.funny .cartoon-name {
+  display: block;
+  top: 54%;
+  font-size: clamp(12px,3.2cqw,35px);
+}
+
+.funny .cartoon-score {
+  display: block;
+  top: 69%;
+  font-size: clamp(11px,2.5cqw,28px);
+}
 
 .note {
-  color:#d0d5df;
-  text-align:center;
-  font-size:12px;
-  margin-top:18px;
+  color: #d0d5df;
+  text-align: center;
+  font-size: 12px;
+  margin-top: 18px;
 }
 
 @media(max-width:650px) {
   body {
-    padding:20px 10px 34px;
-    overflow-x:hidden;
+    padding: 20px 10px 34px;
+    overflow-x: hidden;
   }
 
-  .panel { padding:16px; }
+  .panel { padding: 16px; }
 
   .form {
-    grid-template-columns:1fr;
+    grid-template-columns: 1fr;
   }
 
-  .primary { width:100%; }
+  .primary { width: 100%; }
 
-  .certificate {
-    margin:0 auto;
-  }
+  .certificate { margin: 0 auto; }
 }
 </style>
 </head>
@@ -371,7 +397,7 @@ button:disabled {
       </p>
 
       <h2 class="cert-title" id="certTitle">
-        شهادة تقدير
+        شهادة تقدير وتفوّق
       </h2>
 
       <p class="cert-subtitle">
@@ -406,9 +432,10 @@ button:disabled {
         </div>
       </footer>
 
-      <div class="ornament" style="margin:22px 0 0">
-        ✦ ❖ ✦
-      </div>
+      <div class="ornament">✦ ❖ ✦</div>
+
+      <div class="cartoon-name" id="cartoonName"></div>
+      <div class="cartoon-score" id="cartoonScore"></div>
 
     </article>
   </div>
@@ -468,24 +495,16 @@ function showCertificate(student) {
   certificate.classList.toggle("funny", !isBlack);
 
   document.getElementById("certKicker").textContent =
-    isBlack
-      ? "شهادة استحقاق وتميّز"
-      : "شهادة الصمود والمحاولة";
+    "شهادة استحقاق وتميّز";
 
   document.getElementById("certTitle").textContent =
-    isBlack
-      ? "شهادة تقدير وتفوّق"
-      : "شهادة مشاركة بروح رياضية";
+    "شهادة تقدير وتفوّق";
 
   document.getElementById("certIntro").textContent =
-    isBlack
-      ? "تُمنح هذه الشهادة إلى الطالب/الطالبة"
-      : "تُمنح هذه الشهادة إلى صاحب/ة المحاولة";
+    "تُمنح هذه الشهادة إلى الطالب/الطالبة";
 
   document.getElementById("certCopy").textContent =
-    isBlack
-      ? "تقديرًا لاجتهاده وتميّزه في امتحان شهر أكتوبر لمادة الحاسب الآلي. نفخر بما بذله من جهد وحرص على النجاح والتفوق، ونتمنى له دوام التميّز والإبداع ومزيدًا من الإنجازات والنجاحات."
-      : "لخوضه امتحان الحاسب الآلي بشجاعة وثبات، ومواجهته الأسئلة حتى آخر لحظة. قد تكون الدرجة أقل من المطلوب، لكن روح المحاولة تستحق التحية! المرة القادمة ننتظر مفاجأة أكبر.";
+    "تقديرًا لاجتهاده وتميّزه في امتحان شهر أكتوبر لمادة الحاسب الآلي. نفخر بما بذله من جهد وحرص على النجاح والتفوق، ونتمنى له دوام التميّز والإبداع ومزيدًا من الإنجازات والنجاحات.";
 
   document.getElementById("certificateName").textContent =
     student.name;
@@ -496,10 +515,16 @@ function showCertificate(student) {
   document.getElementById("certificateDate").textContent =
     formatDate();
 
+  document.getElementById("cartoonName").textContent =
+    student.name;
+
+  document.getElementById("cartoonScore").textContent =
+    "درجتك: " + score;
+
   document.getElementById("resultTitle").textContent =
     isBlack
       ? "مبروك! شهادة التقدير جاهزة"
-      : "شهادة المحاولة جاهزة";
+      : "شهادة المشاركة جاهزة";
 
   resultBox.classList.add("show");
 
@@ -596,12 +621,25 @@ downloadButton.addEventListener("click", async () => {
       await document.fonts.ready;
     }
 
-    await new Promise(resolve => setTimeout(resolve, 300));
+    if (certificate.classList.contains("funny")) {
+      const image = new Image();
+      image.src = "low-score-certificate.png";
+
+      await new Promise((resolve, reject) => {
+        image.onload = resolve;
+        image.onerror = () => reject(
+          new Error("لم يتم العثور على صورة الشهادة الكرتونية")
+        );
+      });
+    }
+
+    await new Promise(resolve => setTimeout(resolve, 400));
 
     const canvas = await html2canvas(certificate, {
       scale: 2,
-      backgroundColor: null,
+      backgroundColor: "#ffffff",
       useCORS: true,
+      allowTaint: false,
       logging: false,
       width: certificate.clientWidth,
       height: certificate.clientHeight,
@@ -611,7 +649,7 @@ downloadButton.addEventListener("click", async () => {
       )
     });
 
-    const image = canvas.toDataURL("image/jpeg", 0.96);
+    const imageData = canvas.toDataURL("image/jpeg", 0.96);
     const { jsPDF } = window.jspdf;
 
     const pdf = new jsPDF({
@@ -633,7 +671,7 @@ downloadButton.addEventListener("click", async () => {
     const height = canvas.height * ratio;
 
     pdf.addImage(
-      image,
+      imageData,
       "JPEG",
       (pageWidth - width) / 2,
       (pageHeight - height) / 2,
@@ -652,15 +690,13 @@ downloadButton.addEventListener("click", async () => {
 
     pdf.save(`شهادة_${safeName || "الطالب"}.pdf`);
 
-    setStatus(
-      "تم تجهيز ملف الشهادة للتحميل.",
-      "success"
-    );
+    setStatus("تم تجهيز ملف الشهادة للتحميل.", "success");
 
   } catch (error) {
     console.error(error);
 
     setStatus(
+      error.message ||
       "لم نتمكن من إنشاء PDF. حدّثي الصفحة وحاولي مرة أخرى.",
       "error"
     );
